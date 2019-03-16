@@ -9,6 +9,12 @@
 
 **A module that integrates `tomlankhorst/afas-profit` with Laravel.**
 
+Requirements
+----
+
+- PHP 7.2 + 
+- Laravel 5.5, 5.7, 5.8 _(5.6 is EOL)_
+
 Configuration
 ----
 

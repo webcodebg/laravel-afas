@@ -33,7 +33,7 @@
     "require": {
         "php": "^7.2",
         "tomlankhorst/afas-profit": "^0.2.2",
-        "laravel/framework": "^5.7",
+        "laravel/framework": "^5.5",
         "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
