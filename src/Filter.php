@@ -3,6 +3,7 @@
 namespace tomlankhorst\LaravelAfas;
 
 use iPublications\Profit\ConnectorFilter as DriverConnectorFilter;
+use iPublications\Profit\ConnectorFilter as Filt;
 
 class Filter
 {
@@ -10,6 +11,18 @@ class Filter
      * @var DriverConnectorFilter
      */
     protected $driver;
+
+    /**
+     * @var array Mapping of filter operators to driver constants
+     */
+    protected $operatorMap = [
+        '=' => Filt::EQ,
+        '>' => Filt::GT,
+        '>=' => Filt::GT_OR_EQ,
+        '<' => Filt::LT,
+        '<=' => Filt::LT_OR_EQ,
+        'like' => Filt::LIKE,
+    ];
 
     public function __construct()
     {
@@ -65,13 +78,10 @@ class Filter
     {
         $operator = trim(strtolower($operator));
 
-        switch ($operator) {
-            case '=':
-                return DriverConnectorFilter::EQ;
-            case 'like':
-                return DriverConnectorFilter::LIKE;
-            default:
-                throw new \InvalidArgumentException("Operator '$operator' not supported.");
+        if (!array_key_exists($operator, $this->operatorMap)) {
+            throw new \InvalidArgumentException("Operator '$operator' not supported.");
         }
+
+        return $this->operatorMap[$operator];
     }
 }
