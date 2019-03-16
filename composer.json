@@ -1,0 +1,43 @@
+{
+    "name": "tomlankhorst/laravel-afas",
+    "description": "Laravel package around tomlankhorst/afas-profit",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Lankhorst",
+            "email": "tomlankhorst@webhub.nl"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "tomlankhorst\\LaravelAfas\\AfasServiceProvider"
+            ],
+            "aliases": {
+                "Afas": "tomlankhorst\\LaravelAfas\\AfasFacade"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "tomlankhorst\\LaravelAfas\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tomlankhorst\\LaravelAfas\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "tomlankhorst/afas-profit": "^0.2.2",
+        "laravel/framework": "^5.8",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "^3.8"
+    }
+}

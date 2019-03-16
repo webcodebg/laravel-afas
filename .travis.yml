@@ -1,0 +1,27 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+  include:
+    # Laravel 5.8
+    - php: 7.1
+      env: LARAVEL=5.8.* TESTBENCH=3.8.* ORCHESTRA_DATABASE=3.8.* PHPUNIT=~7.5
+    - php: 7.2
+      env: LARAVEL=5.8.* TESTBENCH=3.8.* ORCHESTRA_DATABASE=3.8.* PHPUNIT=~8.0
+    - php: 7.3
+      env: LARAVEL=5.8.* TESTBENCH=3.8.* ORCHESTRA_DATABASE=3.8.* PHPUNIT=~8.0
+
+before_install:
+  - composer self-update --stable --no-interaction
+
+install:
+  - travis_retry composer install --no-suggest --no-interaction
+
+script:
+  - vendor/bin/phpunit --verbose --configuration phpunit.xml.dist

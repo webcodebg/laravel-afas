@@ -1,0 +1,116 @@
+<?php
+
+namespace tomlankhorst\LaravelAfas;
+
+use GuzzleHttp\ClientInterface;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use iPublications\Profit\AppConnectorGet;
+use iPublications\Profit\Connector as DriverConnector;
+use iPublications\Profit\GuzzleAdapterClient;
+
+class Connector
+{
+
+    /**
+     * @var Connection
+     */
+    protected $connection;
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * @var DriverConnector
+     */
+    protected $driver;
+
+    /**
+     * @var Filter
+     */
+    protected $filter;
+
+    /**
+     * Connector
+     * @param Connection $connection
+     * @param array $config
+     */
+    public function __construct(Connection $connection, array $config)
+    {
+        $this->connection = $connection;
+        $this->config = $config;
+
+        $this->filter = new Filter();
+
+        $this->driver = new AppConnectorGet(clone $this->connection->getDriver());
+        $this->driver->SetClient(
+            new GuzzleAdapterClient($this->getClient())
+        );
+        $this->driver->SetToken($this->config['token']);
+        $this->driver->SetConnectorId($this->config['id']);
+    }
+
+    /**
+     * Get N records
+     *
+     * @param int $value
+     * @return Connector
+     */
+    public function take(int $value) : self
+    {
+        $this->driver->SetTake($value);
+
+        return $this;
+    }
+
+    /**
+     * Skip N records
+     *
+     * @param int $value
+     * @return Connector
+     */
+    public function skip(int $value) : self
+    {
+        $this->driver->SetSkip($value);
+
+        return $this;
+    }
+
+    /**
+     * Execute the request and return the result
+     *
+     * @return Collection
+     * @throws \Exception
+     */
+    public function get() : Collection
+    {
+        if (!$this->filter->isEmpty()) {
+            $this->driver->SetFilter($this->filter->getDriver());
+        }
+
+        $this->driver->Execute();
+
+        return Collection::make(Arr::wrap($this->driver->GetResults()));
+    }
+
+    public function getClient() : ClientInterface
+    {
+        return $this->connection->getClient();
+    }
+
+    public function __call($name, $arguments)
+    {
+        /**
+         * Proxy filters
+         */
+        if (in_array($name, ['where', 'orWhere'])) {
+            $this->filter->$name(...$arguments);
+
+            return $this;
+        }
+
+        return null;
+    }
+}
