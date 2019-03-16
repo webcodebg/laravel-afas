@@ -12,23 +12,23 @@ matrix:
 
     # Laravel 5.7
     - php: 7.2
-      env: LARAVEL=5.7.* TESTBENCH=3.7.*
+      env: LARAVEL=5.7.* TESTBENCH=3.7.* PHPUNIT=^7.5
       name: Laravel 5.7 @ PHP 7.2
     - php: 7.3
-      env: LARAVEL=5.7.* TESTBENCH=3.7.*
+      env: LARAVEL=5.7.* TESTBENCH=3.7.* PHPUNIT=^7.5
       name: Laravel 5.7 @ PHP 7.3
 
     # Laravel 5.8
     - php: 7.2
-      env: LARAVEL=5.8.* TESTBENCH=3.8.*
+      env: LARAVEL=5.8.* TESTBENCH=3.8.* PHPUNIT=^8.0
       name: Laravel 5.8 @ PHP 7.2
     - php: 7.3
-      env: LARAVEL=5.8.* TESTBENCH=3.8.*
+      env: LARAVEL=5.8.* TESTBENCH=3.8.* PHPUNIT=^8.0
       name: Laravel 5.8 @ PHP 7.3
 
 before_install:
   - composer self-update --stable --no-interaction
-  - composer require friendsofphp/php-cs-fixer orchestra/testbench:$TESTBENCH phpunit/phpunit:^8.0 --no-update --no-interaction --dev
+  - composer require friendsofphp/php-cs-fixer orchestra/testbench:$TESTBENCH phpunit/phpunit:$PHPUNIT --no-update --no-interaction --dev
 
 install:
   - travis_retry composer install --no-suggest --no-interaction
