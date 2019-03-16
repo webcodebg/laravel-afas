@@ -28,8 +28,7 @@ matrix:
 
 before_install:
   - composer self-update --stable --no-interaction
-  - composer require orchestra/testbench:$TESTBENCH phpunit/phpunit:^8.0 --no-update --no-interaction --dev
-  - composer require friendsofphp/php-cs-fixer
+  - composer require friendsofphp/php-cs-fixer orchestra/testbench:$TESTBENCH phpunit/phpunit:^8.0 --no-update --no-interaction --dev
 
 install:
   - travis_retry composer install --no-suggest --no-interaction
