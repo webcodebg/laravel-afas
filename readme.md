@@ -1,9 +1,13 @@
-Laravel Afas
-=======
+<h1 align="center">Laravel Afas</h1>
 
-[![Build Status](https://travis-ci.org/tomlankhorst/laravel-afas.svg?branch=master)](https://travis-ci.org/tomlankhorst/laravel-afas)
+<p align="center">
+<a href="https://travis-ci.org/tomlankhorst/laravel-afas"><img src="https://travis-ci.org/tomlankhorst/laravel-afas.svg?branch=master" alt="Build Status"></a>
+<a href="https://packagist.org/packages/tomlankhorst/laravel-afas"><img src="https://poser.pugx.org/tomlankhorst/laravel-afas/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/tomlankhorst/laravel-afas"><img src="https://poser.pugx.org/tomlankhorst/laravel-afas/license" alt="License"></a>
+<a href="https://packagist.org/packages/tomlankhorst/laravel-afas"><img src="https://poser.pugx.org/tomlankhorst/laravel-afas/downloads" alt="Total Downloads"></a>
+</p>
 
-A module that integrates `tomlankhorst/afas-profit` with Laravel.
+**A module that integrates `tomlankhorst/afas-profit` with Laravel.**
 
 Configuration
 ----
@@ -44,3 +48,8 @@ $results = Afas::connector('products')
     ->skip(10)
     ->get();
 ```
+
+Credits
+---
+
+Thanks to iPublications for developing [iPublications/AFAS-ProfitClass-PHP](https://github.com/iPublications/AFAS-ProfitClass-PHP).
