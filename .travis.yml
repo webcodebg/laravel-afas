@@ -13,14 +13,18 @@ matrix:
     # Laravel 5.7
     - php: 7.2
       env: LARAVEL=5.7.* TESTBENCH=3.7.*
+      name: Laravel 5.7 @ PHP 7.2
     - php: 7.3
       env: LARAVEL=5.7.* TESTBENCH=3.7.*
+      name: Laravel 5.7 @ PHP 7.3
 
     # Laravel 5.8
     - php: 7.2
       env: LARAVEL=5.8.* TESTBENCH=3.8.*
+      name: Laravel 5.8 @ PHP 7.2
     - php: 7.3
       env: LARAVEL=5.8.* TESTBENCH=3.8.*
+      name: Laravel 5.8 @ PHP 7.3
 
 before_install:
   - composer self-update --stable --no-interaction
