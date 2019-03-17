@@ -92,7 +92,13 @@ class Connector
 
         $this->connector->Execute();
 
-        return Collection::make(Arr::wrap($this->connector->GetResults()));
+        $results = Collection::make(Arr::wrap($this->connector->GetResults()));
+
+        foreach ($results as $key => $result) {
+            $results[$key] = (array)$result;
+        }
+
+        return $results;
     }
 
     public function getClient() : ClientInterface
