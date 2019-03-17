@@ -3,7 +3,7 @@
 namespace tomlankhorst\LaravelAfas;
 
 use iPublications\Profit\ConnectorFilter as DriverConnectorFilter;
-use iPublications\Profit\ConnectorFilter as Filt;
+use iPublications\Profit\ConnectorFilter as DriverOp;
 
 class Filter
 {
@@ -16,12 +16,12 @@ class Filter
      * @var array Mapping of filter operators to driver constants
      */
     protected $operatorMap = [
-        '=' => Filt::EQ,
-        '>' => Filt::GT,
-        '>=' => Filt::GT_OR_EQ,
-        '<' => Filt::LT,
-        '<=' => Filt::LT_OR_EQ,
-        'like' => Filt::LIKE,
+        '=' => DriverOp::EQ,
+        '>' => DriverOp::GT,
+        '>=' => DriverOp::GT_OR_EQ,
+        '<' => DriverOp::LT,
+        '<=' => DriverOp::LT_OR_EQ,
+        'like' => DriverOp::LIKE,
     ];
 
     public function __construct()
