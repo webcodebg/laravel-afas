@@ -2,7 +2,6 @@
 
 namespace tomlankhorst\LaravelAfas;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AfasServiceProvider extends ServiceProvider
@@ -13,7 +12,7 @@ class AfasServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ConnectionManager::class, function ($app) {
-            return new ConnectionManager($app, Config::get('afas'));
+            return new ConnectionManager($app, $app['config']->get('afas'));
         });
 
         $this->app->bind(Connection::class);

@@ -2,38 +2,26 @@
 
 namespace tomlankhorst\LaravelAfas\Tests;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Arr;
+use Orchestra\Testbench\TestCase as BenchTestCase;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends BenchTestCase
 {
     /**
-     * @var array
+     * @inheritdoc
      */
-    protected $history = [];
+    protected function getPackageProviders($app)
+    {
+        return ['tomlankhorst\LaravelAfas\AfasServiceProvider'];
+    }
 
     /**
-     * @param $responses
-     * @return HandlerStack
+     * @inheritdoc
      */
-    protected function makeMockStack($responses)
+    protected function getPackageAliases($app)
     {
-        $responses = Arr::wrap($responses);
-
-        foreach ($responses as &$response) {
-            if (!$response instanceof Response && !$response instanceof RequestException) {
-                $response = new Response(200, [], $response);
-            }
-        }
-
-        $stack = HandlerStack::create(new MockHandler($responses));
-        $stack->push(Middleware::history($this->history));
-
-        return $stack;
+        return [
+            'Afas' => 'tomlankhorst\LaravelAfas\AfasFacade',
+        ];
     }
 
     /**
