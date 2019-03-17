@@ -2,33 +2,33 @@
 
 namespace tomlankhorst\LaravelAfas;
 
-use Illuminate\Contracts\Container\Container;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 
 class ConnectionManager
 {
     protected $config;
 
     /**
-     * @var Container
+     * @var ClientInterface
      */
-    protected $app;
+    protected $client;
 
     /**
      * ConnectionManager
      *
-     * @param Container $app
      * @param array $config configuration
+     * @param ClientInterface $client
      */
-    public function __construct(Container $app, array $config)
+    public function __construct(array $config, ClientInterface $client = null)
     {
-        $this->app = $app;
         $this->config = $config;
+        $this->client = $client ?? new Client;
     }
 
     /**
      * @param string $name of the connection
      * @return Connection
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function connection(string $name = 'default') : Connection
     {
@@ -36,28 +36,18 @@ class ConnectionManager
             throw new \InvalidArgumentException("Connection $name is not configured.");
         }
 
-        return $this->app->make(Connection::class, [
-            'manager' => $this,
-            'config' => $this->config['connections'][$name],
-        ]);
+        $config = $this->config['connections'][$name];
+
+        return new Connection($this, $config, $this->client);
     }
 
     /**
      * @param string $name of the connector
      * @param string $connection name of the connection
      * @return Connector
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function connector(string $name, string $connection = "default") : Connector
     {
         return $this->connection($connection)->connector($name);
-    }
-
-    /**
-     * @return Container
-     */
-    public function getApp() : Container
-    {
-        return $this->app;
     }
 }

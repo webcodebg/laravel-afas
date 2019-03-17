@@ -51,8 +51,8 @@ class SmokeTest extends TestCase
 
     protected function makeConnection(\GuzzleHttp\Client $client = null) : Connection
     {
-        $manager = new ConnectionManager($this->app, $this->config);
+        $manager = new ConnectionManager($this->config, $client);
 
-        return new Connection($manager, $this->config['connections']['default'], $client);
+        return $manager->connection('default');
     }
 }

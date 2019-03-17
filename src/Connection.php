@@ -51,7 +51,6 @@ class Connection
      *
      * @param string $name of the connector
      * @return Connector
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function connector(string $name) : Connector
     {
@@ -59,10 +58,9 @@ class Connection
             throw new \InvalidArgumentException("Connector $name is not configured.");
         }
 
-        return $this->getManager()->getApp()->make(Connector::class, [
-            'connection' => $this,
-            'config' => $this->config['connectors'][$name],
-        ]);
+        $config = $this->config['connectors'][$name];
+
+        return new Connector($this, $config);
     }
 
     public function getManager() : ConnectionManager

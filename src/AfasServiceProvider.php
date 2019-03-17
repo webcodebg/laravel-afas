@@ -12,7 +12,7 @@ class AfasServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ConnectionManager::class, function ($app) {
-            return new ConnectionManager($app, $app['config']->get('afas'));
+            return new ConnectionManager($app['config']->get('afas'));
         });
 
         $this->app->bind(Connection::class);
