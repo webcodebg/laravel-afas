@@ -25,7 +25,7 @@ class Connector
     /**
      * @var DriverConnector
      */
-    protected $driver;
+    protected $connector;
 
     /**
      * @var Filter
@@ -44,12 +44,12 @@ class Connector
 
         $this->filter = new Filter();
 
-        $this->driver = new AppConnectorGet(clone $this->connection->getDriver());
-        $this->driver->SetClient(
+        $this->connector = new AppConnectorGet(clone $this->connection->getDriver());
+        $this->connector->SetClient(
             new GuzzleAdapterClient($this->getClient())
         );
-        $this->driver->SetToken($this->config['token']);
-        $this->driver->SetConnectorId($this->config['id']);
+        $this->connector->SetToken($this->config['token']);
+        $this->connector->SetConnectorId($this->config['id']);
     }
 
     /**
@@ -60,7 +60,7 @@ class Connector
      */
     public function take(int $value) : self
     {
-        $this->driver->SetTake($value);
+        $this->connector->SetTake($value);
 
         return $this;
     }
@@ -73,7 +73,7 @@ class Connector
      */
     public function skip(int $value) : self
     {
-        $this->driver->SetSkip($value);
+        $this->connector->SetSkip($value);
 
         return $this;
     }
@@ -87,12 +87,12 @@ class Connector
     public function get() : Collection
     {
         if (!$this->filter->isEmpty()) {
-            $this->driver->SetFilter($this->filter->getDriver());
+            $this->connector->SetFilter($this->filter->getDriver());
         }
 
-        $this->driver->Execute();
+        $this->connector->Execute();
 
-        return Collection::make(Arr::wrap($this->driver->GetResults()));
+        return Collection::make(Arr::wrap($this->connector->GetResults()));
     }
 
     public function getClient() : ClientInterface
