@@ -10,7 +10,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use tomlankhorst\LaravelAfas\Tests\TestCase;
 
-class ConnectorTest extends TestCase
+class SmokeTest extends TestCase
 {
     protected $config = [
         'connections' => [
@@ -40,6 +40,13 @@ class ConnectorTest extends TestCase
         $result = $connector->skip(0)->take(10)->get();
 
         $this->assertCount(10, $result);
+
+        $this->assertEquals([
+            'Code' => 'Art',
+            'Itemcode' => 'XYS407',
+            'Magazijn' => 'LVB',
+            'Op_voorraad' => '1'
+        ], (array)$result[0]);
     }
 
     protected function makeConnection(\GuzzleHttp\Client $client = null) : Connection
