@@ -57,7 +57,7 @@ class Filter
     {
         $this->driver->add_or();
 
-        $this->where($field, $this->matchOperator($operator), $value);
+        $this->where($field, $operator, $value);
     }
 
     /**
