@@ -1,5 +1,5 @@
 {
-    "name": "tomlankhorst/laravel-afas",
+    "name": "webcode/laravel-afas",
     "description": "Laravel package around tomlankhorst/afas-profit",
     "type": "library",
     "license": "MIT",
